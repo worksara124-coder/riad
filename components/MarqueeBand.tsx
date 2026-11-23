@@ -19,7 +19,7 @@ function Row() {
 
 export function MarqueeBand() {
   return (
-    <section aria-label="L’esprit Riad Noor" className="relative overflow-hidden bg-olive py-[clamp(4rem,8vw,7rem)]">
+    <section aria-label="L’esprit Riad Noor" className="motif relative overflow-hidden bg-olive py-[clamp(4rem,8vw,7rem)] [--motif-color:var(--color-creme)] [--motif-opacity:0.12]">
       <p className="script relative z-10 px-6 text-[clamp(3rem,2rem+4vw,6.5rem)] text-creme sm:px-12">
         Le temps d’un séjour
       </p>

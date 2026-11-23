@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { rooms } from "@/data/rooms";
 import { RoomCard } from "./RoomCard";
 import { useBooking } from "./BookingProvider";
+import { SectionHeading } from "./SectionHeading";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,21 +48,24 @@ export function RoomsSection() {
       id="chambres"
       ref={sectionRef}
       aria-labelledby="chambres-titre"
-      className="relative bg-creme px-5 pb-[clamp(5rem,9vw,8rem)] pt-[clamp(4rem,8vw,7rem)] sm:px-8 lg:px-12"
+      className="motif relative z-[5] bg-creme px-5 pb-[clamp(5rem,9vw,8rem)] pt-[clamp(2.5rem,5vw,4rem)] sm:px-8 lg:px-12"
     >
+      {/* L'arche crème monte par-dessus la dernière image de la visite : on passe la porte. */}
+      <svg className="arch-rise text-creme" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+        <path
+          d="M0 120 V112 C210 110 360 92 440 52 C470 36 488 18 500 0 C512 18 530 36 560 52 C640 92 790 110 1000 112 V120 Z"
+          fill="currentColor"
+        />
+      </svg>
       <div className="mx-auto max-w-[1320px]">
-        <header className="mx-auto flex max-w-3xl flex-col items-center text-center" data-reveal>
-          <p className="eyebrow">Riad Noor · Marrakech</p>
-          <h2 id="chambres-titre" className="title-duo mt-5 items-center text-brun">
-            <span className="display text-[clamp(2.6rem,1.8rem+3.4vw,5rem)]">Nos chambres</span>
-            <span className="script -mt-[0.3em] text-[clamp(4rem,2.8rem+5vw,8rem)]" aria-hidden="true">
-              votre cocon
-            </span>
-          </h2>
-          <p className="mt-6 max-w-[44ch] text-[clamp(1rem,0.95rem+0.3vw,1.15rem)] text-brun-logo">
-            Choisissez le cocon de votre prochain séjour à Marrakech.
-          </p>
-        </header>
+        <SectionHeading
+          id="chambres-titre"
+          chapter="02"
+          label="Les chambres"
+          title="Nos chambres"
+          accent="votre cocon"
+          intro="Choisissez le cocon de votre prochain séjour à Marrakech."
+        />
 
         {/* Grille éditoriale décalée : la colonne centrale descend, comme une mise en page de magazine. */}
         <ul className="mt-[clamp(3rem,6vw,5rem)] grid grid-cols-1 gap-x-8 gap-y-14 min-[680px]:grid-cols-2 min-[1100px]:grid-cols-3 min-[1100px]:gap-x-10">

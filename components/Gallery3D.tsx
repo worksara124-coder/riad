@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SectionHeading } from "./SectionHeading";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,19 +69,17 @@ export function Gallery3D() {
       id="galerie"
       ref={sectionRef}
       aria-labelledby="galerie-titre"
-      className="relative overflow-hidden bg-creme py-[clamp(4rem,8vw,7rem)]"
+      className="motif motif-sides relative overflow-hidden bg-[#f1e9dc] py-[clamp(4rem,8vw,7rem)]"
     >
-      <div className="mx-auto max-w-2xl px-5 text-center">
-        <p className="eyebrow">Galerie</p>
-        <h2 id="galerie-titre" className="title-duo mt-5 items-center text-brun">
-          <span className="display text-[clamp(2.4rem,1.6rem+3vw,4.4rem)]">Le riad en images</span>
-          <span className="script -mt-[0.28em] text-[clamp(3.8rem,2.6rem+4.6vw,7rem)]" aria-hidden="true">
-            un tour d’horizon
-          </span>
-        </h2>
-        <p className="mt-4 text-[clamp(1rem,0.95rem+0.3vw,1.15rem)] text-brun-logo">
-          De la porte au patio, du patio à la chambre : un tour d’horizon en faisant défiler.
-        </p>
+      <div className="mx-auto max-w-3xl px-5">
+        <SectionHeading
+          id="galerie-titre"
+          chapter="05"
+          label="En images"
+          title="Le riad en images"
+          accent="un tour d’horizon"
+          intro="De la porte au patio, du patio à la chambre : un tour d’horizon en faisant défiler."
+        />
       </div>
 
       <div className="ring-stage mx-auto mt-[clamp(2.5rem,5vw,4rem)]">

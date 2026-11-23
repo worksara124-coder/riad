@@ -23,7 +23,7 @@ export function RoomCard({ room, index, onBook }: RoomCardProps) {
 
   return (
     <article data-room-card className="group flex h-full flex-col">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-sable">
+      <div className="arch-frame relative aspect-[4/5] bg-sable">
         {/* Le cadre intérieur bouge légèrement au scroll (parallaxe). */}
         <div data-parallax className="absolute inset-x-0 -top-[8%] h-[116%]">
           <Image
@@ -35,7 +35,7 @@ export function RoomCard({ room, index, onBook }: RoomCardProps) {
             style={{ objectPosition: room.imagePosition ?? "50% 50%" }}
           />
         </div>
-        <span className="absolute left-4 top-4 rounded-full bg-creme/90 px-3 py-1 text-[0.72rem] font-medium tracking-[0.2em] text-brun">
+        <span className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-creme/90 px-3 py-1 text-[0.72rem] font-medium tracking-[0.2em] text-brun">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>

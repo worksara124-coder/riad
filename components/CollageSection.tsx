@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SectionHeading } from "./SectionHeading";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -77,17 +78,21 @@ export function CollageSection() {
   return (
     <section
       ref={sectionRef}
+      id="lumiere"
       aria-labelledby="accroche-titre"
-      className="relative overflow-hidden bg-[#f1e9dc] px-5 py-[clamp(5rem,10vw,9rem)] sm:px-8 lg:px-12"
+      className="motif motif-sides relative overflow-hidden bg-[#f1e9dc] px-5 py-[clamp(5rem,10vw,9rem)] sm:px-8 lg:px-12"
     >
-      {/* Ombre de palmes sur le mur, comme dans le patio. */}
-      <div className="palm-shadow pointer-events-none absolute inset-0" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-[1320px]">
-        <h2 id="accroche-titre" data-tagline className="title-duo items-center text-center text-brun">
-          <span className="display text-[clamp(2.4rem,1.4rem+4.4vw,6.2rem)]">Venez pour le patio</span>
-          <span className="script -mt-[0.28em] text-[clamp(3.6rem,2.2rem+6.4vw,9.5rem)]">restez pour la lumière</span>
-        </h2>
+        <div data-tagline>
+          <SectionHeading
+            id="accroche-titre"
+            chapter="03"
+            label="La lumière"
+            title="Venez pour le patio"
+            accent="restez pour la lumière"
+          />
+        </div>
 
         <div className="relative mx-auto mt-[clamp(3rem,6vw,5rem)] h-[clamp(380px,62vw,760px)] max-w-[1100px]">
           {prints.map((p) => (

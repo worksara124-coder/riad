@@ -1,15 +1,11 @@
 import { Logo } from "./Logo";
+import { chapters } from "./SectionHeading";
 
-const links = [
-  { href: "#le-riad", label: "Le riad" },
-  { href: "#chambres", label: "Nos chambres" },
-  { href: "#art-de-vivre", label: "L’âme du riad" },
-  { href: "#galerie", label: "Galerie" },
-];
+const links = chapters.map((c) => ({ href: `#${c.id}`, label: `${c.number} · ${c.label}` }));
 
 export function Footer() {
   return (
-    <footer className="border-t border-sable/80 bg-[#f1e9dc] px-5 pb-8 pt-[clamp(3.5rem,6vw,5rem)] sm:px-8 lg:px-12">
+    <footer className="motif border-t border-sable/80 bg-[#f1e9dc] [--motif-opacity:0.14] [--motif-fade:linear-gradient(to_bottom,transparent,#000_60%)] px-5 pb-8 pt-[clamp(3.5rem,6vw,5rem)] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-[1320px]">
         <div className="flex flex-col items-center text-center">
           <span className="block h-[clamp(64px,8vw,92px)]">

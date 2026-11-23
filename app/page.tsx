@@ -9,6 +9,7 @@ import { ContactCta } from "@/components/ContactCta";
 import { Footer } from "@/components/Footer";
 import { Intro } from "@/components/Intro";
 import { BookingProvider } from "@/components/BookingProvider";
+import { ChapterRail } from "@/components/ChapterRail";
 
 export default function HomePage() {
   // Lu côté serveur uniquement : l'URL et le secret ne sont jamais envoyés au navigateur.
@@ -26,6 +27,7 @@ export default function HomePage() {
       </a>
       <Intro />
       <Header />
+      <ChapterRail />
       <main>
         <ImmersiveExperience />
         <RoomsSection />

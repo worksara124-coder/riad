@@ -4,15 +4,19 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Logo } from "./Logo";
+import { chapters } from "./SectionHeading";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const links = [
-  { href: "#le-riad", label: "Le riad", accent: "la visite" },
-  { href: "#chambres", label: "Nos chambres", accent: "votre cocon" },
-  { href: "#art-de-vivre", label: "L’âme du riad", accent: "les matières" },
-  { href: "#galerie", label: "Galerie", accent: "en images" },
-];
+const accents: Record<string, string> = {
+  "le-riad": "la visite",
+  chambres: "votre cocon",
+  lumiere: "le patio",
+  "art-de-vivre": "les matières",
+  galerie: "un tour d’horizon",
+  "votre-sejour": "en toute simplicité",
+};
+const links = chapters.map((c) => ({ href: `#${c.id}`, number: c.number, label: c.label, accent: accents[c.id] }));
 
 /**
  * Header éditorial : « Menu » à gauche, logo centré, « Réserver » à droite.
@@ -75,6 +79,20 @@ export function Header() {
 
   const onOverlay = open || !solid;
 
+  // Ferme le menu, puis fait défiler : le scroll de la page doit être débloqué avant de partir.
+  const goTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!open) return;
+    e.preventDefault();
+    setOpen(false);
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.querySelector(href)?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+        history.replaceState(null, "", href);
+      }),
+    );
+  };
+
   return (
     <>
       <header
@@ -108,7 +126,7 @@ export function Header() {
 
           <a
             href="#le-riad"
-            onClick={() => setOpen(false)}
+            onClick={(e) => goTo(e, "#le-riad")}
             aria-label="Riad Noor — retour au début de la visite"
             className={`flex h-[46px] items-center rounded-full px-4 transition-colors duration-700 md:h-[54px] ${
               onOverlay && !open ? "bg-creme/85 shadow-[0_1px_10px_rgb(53_39_31/0.08)]" : ""
@@ -122,7 +140,7 @@ export function Header() {
           <div className="flex justify-end">
             <a
               href="#chambres"
-              onClick={() => setOpen(false)}
+              onClick={(e) => goTo(e, "#chambres")}
               className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-terracotta-fonce px-4 text-[0.78rem] font-medium uppercase tracking-[0.18em] text-creme shadow-[0_2px_12px_rgb(53_39_31/0.15)] transition-colors hover:bg-brun sm:px-5"
             >
               Réserver
@@ -137,19 +155,22 @@ export function Header() {
         data-open={open}
         aria-hidden={!open}
         inert={!open}
-        className="menu-overlay fixed inset-0 z-40 flex flex-col bg-creme pt-[calc(var(--header-h)+2rem)]"
+        className="menu-overlay motif motif-sides fixed inset-0 z-40 flex flex-col bg-creme pt-[calc(var(--header-h)+1rem)]"
       >
         <nav aria-label="Navigation principale" className="flex flex-1 items-center justify-center px-6">
-          <ul className="flex flex-col items-center gap-[clamp(0.6rem,2.2vh,1.6rem)] text-center">
+          <ul className="flex flex-col items-center gap-[clamp(0.2rem,1.4vh,1rem)] text-center">
             {links.map((link, i) => (
               <li key={link.href} className="menu-item" style={{ "--d": i } as React.CSSProperties}>
                 <a
                   href={link.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => goTo(e, link.href)}
                   className="group relative inline-flex flex-col items-center text-brun"
                 >
-                  <span className="display text-[clamp(2.2rem,1.4rem+3.6vw,4.6rem)] transition-colors group-hover:text-terracotta-fonce">
-                    {link.label}
+                  <span className="flex items-start gap-3">
+                    <span className="mt-[0.4em] text-[0.7rem] font-medium tracking-[0.2em] text-terracotta-fonce">{link.number}</span>
+                    <span className="display text-[clamp(1.9rem,1.2rem+3vw,4rem)] transition-colors group-hover:text-terracotta-fonce">
+                      {link.label}
+                    </span>
                   </span>
                   <span
                     className="script -mt-2 text-[clamp(2.6rem,2rem+2.4vw,4rem)] text-terracotta opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100"

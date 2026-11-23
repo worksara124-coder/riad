@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Lantern } from "./Lantern";
+import { SectionHeading } from "./SectionHeading";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -101,21 +102,19 @@ export function SpiritSection() {
       id="art-de-vivre"
       ref={sectionRef}
       aria-labelledby="art-de-vivre-titre"
-      className="relative overflow-hidden bg-[#f1e9dc] px-5 py-[clamp(4rem,8vw,7.5rem)] sm:px-8 lg:px-12"
+      className="motif relative overflow-hidden bg-creme px-5 py-[clamp(4rem,8vw,7.5rem)] sm:px-8 lg:px-12"
     >
       <div className="mx-auto grid max-w-[1320px] items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         <div data-spirit-text>
-          <p className="eyebrow">Art de vivre</p>
-          <h2 id="art-de-vivre-titre" className="title-duo mt-5 text-brun">
-            <span className="display text-[clamp(2.4rem,1.6rem+3vw,4.4rem)]">L’âme du riad</span>
-            <span className="script -mt-[0.28em] text-[clamp(3.8rem,2.6rem+4.6vw,7rem)]" aria-hidden="true">
-              tout en douceur
-            </span>
-          </h2>
-          <p className="mt-4 max-w-[46ch] text-[clamp(1rem,0.95rem+0.3vw,1.15rem)] text-brun-logo">
-            Des lanternes en laiton, du bois sculpté, du zellige : chaque détail invite à ralentir et à savourer
-            Marrakech autrement.
-          </p>
+          <SectionHeading
+            id="art-de-vivre-titre"
+            chapter="04"
+            label="L’âme du riad"
+            title="L’âme du riad"
+            accent="tout en douceur"
+            align="left"
+            intro="Des lanternes en laiton, du bois sculpté, du zellige : chaque détail invite à ralentir et à savourer Marrakech autrement."
+          />
         </div>
 
         {/* Lanterne en laiton, animée en relief */}
@@ -130,7 +129,7 @@ export function SpiritSection() {
                 data-tilt
                 className="tilt-card group relative h-full overflow-hidden rounded-[6px] border border-sable/80 bg-creme shadow-[0_18px_40px_-26px_rgb(53_39_31/0.45)] [transform-style:preserve-3d]"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="arch-frame relative m-3 mb-0 aspect-[4/3.4]">
                   <Image
                     src={m.image}
                     alt=""

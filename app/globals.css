@@ -365,7 +365,8 @@ html[data-intro="done"] .intro {
   inset: 0;
   margin: 0;
   overflow: hidden;
-  border-radius: 6px;
+  /* Cadre en arche, comme les portes du riad. */
+  border-radius: 999px 999px 8px 8px;
   background: var(--color-sable);
   box-shadow: 0 30px 50px -30px rgb(53 39 31 / 0.5);
   transform: rotateY(calc(var(--i) * var(--step))) translateZ(var(--r));
@@ -583,4 +584,77 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   mask-image: radial-gradient(45% 55% at 88% 12%, #000 0%, transparent 72%),
     radial-gradient(35% 40% at 6% 92%, #000 0%, transparent 72%);
   filter: blur(5px);
+}
+
+@layer components {
+/* ---------- Motif géométrique (zellige) en fond ---------- */
+
+/* Calque teinté par masque : la couleur et l'intensité se règlent par variables. */
+.motif {
+  position: relative;
+  isolation: isolate;
+}
+
+.motif::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--motif-color, var(--color-terracotta));
+  opacity: var(--motif-opacity, 0.1);
+  -webkit-mask-image: url("/images/motif.png"), var(--motif-fade, linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent));
+  mask-image: url("/images/motif.png"), var(--motif-fade, linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent));
+  -webkit-mask-size: var(--motif-size, 360px) var(--motif-size, 360px), 100% 100%;
+  mask-size: var(--motif-size, 360px) var(--motif-size, 360px), 100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  /* Le motif glisse très lentement avec le scroll (variable mise à jour en JS). */
+  -webkit-mask-position: 50% var(--motif-y, 0px), 0 0;
+  mask-position: 50% var(--motif-y, 0px), 0 0;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Variante : motif concentré sur les côtés, le centre reste calme pour le texte. */
+.motif-sides {
+  --motif-fade: radial-gradient(ellipse 46% 70% at 50% 50%, transparent 40%, #000 100%);
+}
+
+/* ---------- Séparateur ornemental ---------- */
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-terracotta);
+}
+
+.ornament::before,
+.ornament::after {
+  content: "";
+  height: 1px;
+  width: clamp(36px, 6vw, 72px);
+  background: currentColor;
+  opacity: 0.5;
+}
+
+/* ---------- Cadres en arche ---------- */
+
+.arch-frame {
+  border-radius: 999px 999px 8px 8px;
+  overflow: hidden;
+}
+
+/* Arche qui monte par-dessus la fin de la visite : on « passe la porte » vers les chambres. */
+.arch-rise {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  /* Largeur explicite : sinon le SVG prend la largeur de ses proportions et élargit la page sur mobile. */
+  width: 100%;
+  height: clamp(70px, 11vw, 170px);
+  pointer-events: none;
+}
 }
