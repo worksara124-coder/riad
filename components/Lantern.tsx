@@ -71,9 +71,10 @@ export function Lantern() {
           <Image
             src="/images/lanterne.webp"
             alt=""
-            width={560}
-            height={1371}
-            sizes="(min-width: 1024px) 18rem, 40vw"
+            width={624}
+            height={1528}
+            sizes="(min-width: 1024px) 20rem, 60vw"
+            quality={90}
             className="lantern-img h-full w-auto"
           />
         </div>

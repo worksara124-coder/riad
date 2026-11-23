@@ -30,7 +30,8 @@ export function RoomCard({ room, index, onBook }: RoomCardProps) {
             src={room.image}
             alt={room.imageAlt}
             fill
-            sizes="(min-width: 1100px) 31vw, (min-width: 680px) 46vw, 92vw"
+            sizes="(min-width: 1100px) 60vw, (min-width: 680px) 90vw, 180vw"
+            quality={90}
             className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-doux)] group-hover:scale-[1.04] motion-reduce:transform-none"
             style={{ objectPosition: room.imagePosition ?? "50% 50%" }}
           />

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -91,8 +92,8 @@ export function Gallery3D() {
               className="ring-panel"
               style={{ "--i": i, "--step": `${STEP}deg` } as React.CSSProperties}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+              {/* Panneau portrait taillé dans une photo paysage : l'image affichée est ≈ 1,8 × plus large. */}
+              <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 640px) 90vw, 46vw" quality={90} className="object-cover" />
             </figure>
           ))}
         </div>

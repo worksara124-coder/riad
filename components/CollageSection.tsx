@@ -21,6 +21,7 @@ const prints = [
     speed: -12,
     position: "50% 50%",
     ratio: "aspect-[4/3]",
+    sizes: "(min-width: 640px) 55vw, 70vw",
   },
   {
     src: "/images/galerie/fontaine.webp",
@@ -30,6 +31,7 @@ const prints = [
     speed: 18,
     position: "50% 70%",
     ratio: "aspect-[4/5]",
+    sizes: "(min-width: 640px) 62vw, 80vw",
   },
   {
     src: "/images/suite-noor.webp",
@@ -39,6 +41,7 @@ const prints = [
     speed: 30,
     position: "25% 50%",
     ratio: "aspect-[4/3]",
+    sizes: "(min-width: 640px) 40vw, 54vw",
   },
 ];
 
@@ -105,7 +108,7 @@ export function CollageSection() {
               style={{ transform: `rotate(${p.rotate}deg)` }}
             >
               <div className={`relative ${p.ratio} overflow-hidden rounded-[2px]`}>
-                <Image src={p.src} alt={p.alt} fill sizes="(min-width: 640px) 50vw, 64vw" className="object-cover" style={{ objectPosition: p.position }} />
+                <Image src={p.src} alt={p.alt} fill sizes={p.sizes} quality={90} className="object-cover" style={{ objectPosition: p.position }} />
               </div>
             </figure>
           ))}

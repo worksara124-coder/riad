@@ -219,7 +219,8 @@ export function BookingModal({ rooms, roomId, onClose, bookingEnabled }: Booking
                 src={room.image}
                 alt=""
                 fill
-                sizes="27rem"
+                sizes="62rem"
+                quality={90}
                 className="booking-photo object-cover"
                 style={{ objectPosition: room.imagePosition ?? "50% 50%" }}
               />
@@ -276,17 +277,6 @@ export function BookingModal({ rooms, roomId, onClose, bookingEnabled }: Booking
             ) : (
               <form ref={formRef} noValidate onSubmit={submit} className="flex min-h-0 flex-1 flex-col">
                 <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-6 sm:px-9">
-                  {!bookingEnabled && (
-                    <div className="mb-6 flex items-start gap-3 rounded-[18px] bg-olive/10 px-4 py-3 text-[0.9rem]">
-                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-olive/60 text-[0.8rem] font-semibold text-olive" aria-hidden="true">
-                        i
-                      </span>
-                      <p className="text-brun-logo">
-                        <strong className="font-semibold text-brun">Mode démonstration.</strong> L’envoi des demandes n’est pas
-                        encore activé : les informations saisies ne sont ni enregistrées ni transmises.
-                      </p>
-                    </div>
-                  )}
 
                   <Section index="01" title="Votre séjour">
                     {/* Choix de la chambre : vignettes rondes, boutons radio natifs. */}
@@ -312,7 +302,7 @@ export function BookingModal({ rooms, roomId, onClose, bookingEnabled }: Booking
                                 className="sr-only"
                               />
                               <span className="relative block h-14 w-14 overflow-hidden rounded-full bg-sable sm:h-16 sm:w-16">
-                                <Image src={r.image} alt="" fill sizes="64px" className="object-cover" style={{ objectPosition: r.imagePosition ?? "50% 50%" }} />
+                                <Image src={r.image} alt="" fill sizes="96px" quality={90} className="object-cover" style={{ objectPosition: r.imagePosition ?? "50% 50%" }} />
                               </span>
                               <span className="text-[0.8rem] font-medium leading-tight text-brun sm:text-[0.85rem]">{r.name}</span>
                               {checked && (

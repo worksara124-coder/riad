@@ -134,7 +134,8 @@ export function SpiritSection() {
                     src={m.image}
                     alt=""
                     fill
-                    sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 90vw"
+                    sizes="(min-width: 1024px) 24vw, (min-width: 640px) 40vw, 100vw"
+                    quality={90}
                     className="object-cover transition-transform duration-[1200ms] ease-[var(--ease-doux)] group-hover:scale-[1.06]"
                     style={{ objectPosition: m.position }}
                   />
