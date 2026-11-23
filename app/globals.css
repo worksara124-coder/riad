@@ -1,0 +1,586 @@
+@import "tailwindcss";
+
+@theme {
+  --color-creme: #f7f2e9;
+  --color-sable: #dccbb5;
+  --color-terracotta: #b97556;
+  /* Nuance plus soutenue de la terracotta, pour les boutons (contraste 4,7:1 avec le texte crème). */
+  --color-terracotta-fonce: #9a5c40;
+  --color-brun: #35271f;
+  --color-brun-logo: #655044;
+  --color-olive: #73765a;
+
+  /* Titres : Poppins en graisse légère (même famille que les textes). */
+  --font-display: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Accent manuscrit, utilisé en touches (jamais pour un texte à lire). */
+  --font-script: "Allison", "Segoe Script", "Brush Script MT", cursive;
+
+  --ease-doux: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer components {
+/* ---------- Système éditorial : capitales fines + accent manuscrit ---------- */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.02;
+}
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 0.8;
+}
+
+/* Titre composé : ligne manuscrite qui chevauche la ligne en capitales. */
+.title-duo {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-duo .script {
+  position: relative;
+  z-index: 1;
+  margin-top: -0.18em;
+  color: var(--color-terracotta);
+  /* La taille est donnée par une classe utilitaire (≈ 1,7 × la ligne en capitales). */
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+}
+
+:root {
+  --header-h: 64px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: 76px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+  background: var(--color-creme);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-creme);
+  color: var(--color-brun);
+  font-family: var(--font-sans);
+  font-size: clamp(0.97rem, 0.93rem + 0.18vw, 1.03rem);
+  font-weight: 400;
+  line-height: 1.7;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-sable);
+  color: var(--color-brun);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-terracotta-fonce);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Visite immersive ---------- */
+
+.tour {
+  /* Écran maintenu + distance de scroll configurée dans config/media.ts */
+  height: calc(100vh + var(--tour-m) * 1vh);
+  height: calc(100svh + var(--tour-m) * 1svh);
+}
+
+@media (min-width: 768px) {
+  .tour {
+    height: calc(100vh + var(--tour-d) * 1vh);
+    height: calc(100svh + var(--tour-d) * 1svh);
+  }
+}
+
+.tour-stage {
+  height: 100vh;
+  height: 100svh;
+}
+
+.tour-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--focus-m, 50% 50%);
+}
+
+@media (min-width: 768px) {
+  .tour-media {
+    object-position: var(--focus-d, 50% 50%);
+  }
+}
+
+/* Voile de lisibilité : léger, uniquement là où se trouve le texte. */
+.tour-veil {
+  background: linear-gradient(
+    to top,
+    rgb(247 242 233 / 0.92) 0%,
+    rgb(247 242 233 / 0.78) 30%,
+    rgb(247 242 233 / 0.4) 48%,
+    rgb(247 242 233 / 0) 62%
+  );
+}
+
+@media (min-width: 1024px) {
+  .tour-veil {
+    background:
+      linear-gradient(to right, rgb(247 242 233 / 0.82) 0%, rgb(247 242 233 / 0.5) 22%, rgb(247 242 233 / 0) 40%),
+      linear-gradient(to top, rgb(247 242 233 / 0.35) 0%, rgb(247 242 233 / 0) 30%);
+  }
+}
+
+.hero-in {
+  animation: hero-in 1.4s var(--ease-doux) 0.1s both;
+}
+
+/* Pendant l'intro, le texte d'accueil attend l'ouverture des battants. */
+html[data-intro="play"] .hero-in {
+  animation-delay: 2.2s;
+}
+
+html[data-intro="fast"] .hero-in {
+  animation-delay: 0.3s;
+}
+
+/* Grain photographique fixe, très léger (réglable dans config/media.ts). */
+.tour-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 1.6 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  mix-blend-mode: overlay;
+}
+
+/* ---------- Intro : le logo, puis un fondu ---------- */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2.5vw, 1.6rem);
+  background: var(--color-creme);
+  /* En fin d'animation l'écran est masqué : il ne bloque plus rien, même sans JavaScript. */
+  animation: intro-out 0.8s var(--ease-doux) 1.9s forwards;
+}
+
+html[data-intro="skip"] .intro,
+html[data-intro="done"] .intro {
+  display: none;
+}
+
+.intro-logo {
+  display: block;
+  height: clamp(78px, 12vw, 140px);
+  animation: intro-logo-in 1.2s var(--ease-doux) 0.15s both;
+}
+
+.intro-line {
+  display: block;
+  height: 1px;
+  width: clamp(60px, 9vw, 110px);
+  background: var(--color-terracotta);
+  animation: intro-line-in 0.8s var(--ease-doux) 0.7s both;
+}
+
+/* Accélération au premier geste du visiteur. */
+.intro-fast {
+  animation: intro-out-fast 0.4s ease forwards;
+}
+
+@keyframes intro-logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes intro-line-in {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-out-fast {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ---------- Lanterne ---------- */
+
+.lantern-glow {
+  background:
+    radial-gradient(30% 24% at 50% 58%, rgb(255 176 92 / 0.55), transparent 72%),
+    radial-gradient(55% 45% at 50% 58%, rgb(220 203 181 / 0.6), transparent 78%);
+  animation: lantern-flicker 3.2s ease-in-out infinite;
+}
+
+.lantern-floor {
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(101 80 68 / 0.28), transparent);
+  filter: blur(6px);
+  animation: lantern-floor 7s ease-in-out infinite;
+}
+
+.lantern-sway {
+  transform-origin: 50% 0;
+  animation: lantern-sway 7s ease-in-out infinite;
+}
+
+.lantern-img {
+  filter: drop-shadow(0 30px 30px rgb(53 39 31 / 0.25));
+  animation: lantern-light 2.6s ease-in-out infinite;
+}
+
+@keyframes lantern-sway {
+  0%,
+  100% {
+    transform: rotate(-1.6deg);
+  }
+  50% {
+    transform: rotate(1.6deg);
+  }
+}
+
+@keyframes lantern-floor {
+  0%,
+  100% {
+    transform: translateX(-56%) scaleX(0.96);
+  }
+  50% {
+    transform: translateX(-44%) scaleX(0.96);
+  }
+}
+
+@keyframes lantern-flicker {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  30% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0.82;
+  }
+  75% {
+    opacity: 0.97;
+  }
+}
+
+@keyframes lantern-light {
+  0%,
+  100% {
+    filter: drop-shadow(0 30px 30px rgb(53 39 31 / 0.25)) brightness(1);
+  }
+  40% {
+    filter: drop-shadow(0 30px 30px rgb(53 39 31 / 0.25)) brightness(1.06);
+  }
+  70% {
+    filter: drop-shadow(0 30px 30px rgb(53 39 31 / 0.25)) brightness(0.98);
+  }
+}
+
+/* ---------- Cartes 3D ---------- */
+
+.tilt-shine {
+  background: radial-gradient(
+    420px circle at var(--shine-x, 50%) var(--shine-y, 0%),
+    rgb(255 255 255 / 0.28),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.tilt-card:hover .tilt-shine {
+  opacity: 1;
+}
+
+/* ---------- Galerie en anneau 3D ---------- */
+
+.ring-stage {
+  --w: clamp(170px, 24vw, 320px);
+  --r: calc(var(--w) * 1.45);
+  position: relative;
+  height: calc(var(--w) * 1.33 + 60px);
+  perspective: 1800px;
+  perspective-origin: 50% 40%;
+}
+
+.ring {
+  --angle: 25deg;
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  width: var(--w);
+  height: calc(var(--w) * 1.33);
+  margin-left: calc(var(--w) / -2);
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--r) * -1)) rotateX(-7deg) rotateY(var(--angle));
+}
+
+.ring-panel {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--color-sable);
+  box-shadow: 0 30px 50px -30px rgb(53 39 31 / 0.5);
+  transform: rotateY(calc(var(--i) * var(--step))) translateZ(var(--r));
+  backface-visibility: hidden;
+  filter: brightness(var(--light, 1));
+}
+
+.ring-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .ring-stage {
+    --w: 46vw;
+    --r: calc(var(--w) * 1.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring-stage {
+    height: auto;
+    perspective: none;
+    padding: 0 1.25rem;
+    max-width: 1320px;
+  }
+  .ring {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    transform: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .ring-panel {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ---------- Fenêtre de réservation ---------- */
+
+dialog.booking {
+  max-height: 100dvh;
+  max-width: 100vw;
+}
+
+dialog.booking::backdrop {
+  background: rgb(53 39 31 / 0.45);
+}
+
+dialog.booking[open] {
+  animation: dialog-in 0.45s var(--ease-doux);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Fondu doux de la photo quand on change de chambre dans le formulaire. */
+.booking-photo {
+  animation: booking-photo-in 0.6s var(--ease-doux);
+}
+
+@keyframes booking-photo-in {
+  from {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+}
+
+@layer components {
+/* ---------- Boutons ---------- */
+
+.btn-solid,
+.btn-ghost,
+.btn-dark {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding: 0 1.6rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.35s,
+    color 0.35s,
+    border-color 0.35s;
+}
+
+.btn-solid {
+  background: var(--color-terracotta-fonce);
+  color: var(--color-creme);
+}
+
+.btn-solid:hover {
+  background: var(--color-brun);
+}
+
+.btn-dark {
+  background: var(--color-brun);
+  color: var(--color-creme);
+}
+
+.btn-dark:hover {
+  background: var(--color-terracotta-fonce);
+}
+
+.btn-ghost {
+  border: 1px solid rgb(53 39 31 / 0.3);
+  background: rgb(247 242 233 / 0.7);
+  color: var(--color-brun);
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-brun);
+  background: var(--color-creme);
+}
+
+/* Petit libellé en capitales espacées au-dessus des titres. */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-brun-logo);
+}
+}
+
+/* ---------- Menu plein écran ---------- */
+
+.menu-overlay {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.menu-overlay[data-open="true"] {
+  clip-path: inset(0 0 0 0);
+}
+
+.menu-overlay .menu-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s var(--ease-doux),
+    transform 0.6s var(--ease-doux);
+}
+
+.menu-overlay[data-open="true"] .menu-item {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(0.25s + var(--d, 0) * 0.07s);
+}
+
+/* ---------- Bandeau défilant ---------- */
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Photos « tirage » inclinées ---------- */
+
+.print {
+  background: #fbf8f2;
+  padding: 10px 10px 14px;
+  border-radius: 4px;
+  box-shadow:
+    0 1px 2px rgb(53 39 31 / 0.08),
+    0 24px 50px -24px rgb(53 39 31 / 0.45);
+}
+
+/* ---------- Ombre de palmes ---------- */
+
+.palm-shadow {
+  background:
+    repeating-linear-gradient(118deg, rgb(101 80 68 / 0.08) 0 10px, transparent 10px 38px),
+    repeating-linear-gradient(64deg, rgb(101 80 68 / 0.06) 0 8px, transparent 8px 44px);
+  -webkit-mask-image: radial-gradient(45% 55% at 88% 12%, #000 0%, transparent 72%),
+    radial-gradient(35% 40% at 6% 92%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(45% 55% at 88% 12%, #000 0%, transparent 72%),
+    radial-gradient(35% 40% at 6% 92%, #000 0%, transparent 72%);
+  filter: blur(5px);
+}
